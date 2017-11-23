@@ -5,15 +5,21 @@ import rsa.RSAKey;
 
 public class RSAGeneratorKey {
 	
-	//static int nBit = 64;
-	//生成p&q两个大质数
-	int nLength = (int)(128*Math.log(2)/Math.log(10))+1;
 	static BigInteger p,q;
 	static BigInteger n,e,d;
 	
+	public static void main(String[] args) {
+		generatePQN2(128);
+		System.out.print("p=");
+		System.out.println(p);
+		System.out.print("q=");
+		System.out.println(q);
+		
+	}
+	
 	public static RSAKey generateKey(int nBit) {
 		
-		generatePQN(nBit);
+		generatePQN2(nBit);
 		System.out.print("p=");
 		System.out.println(p);
 		System.out.print("q=");
@@ -37,17 +43,6 @@ public class RSAGeneratorKey {
 		
 		RSAKey res = new RSAKey(p,q,n,e,d);
 		return res;
-		/*
-		BigInteger tp;
-		tp =  new BigInteger(nBit-1, rnd);
-		tp = tp.multiply(new BigInteger("2"));
-		tp = tp.add(BigInteger.ONE);
-		while(!isPrimeProbable(tp)) {
-			tp =  new BigInteger(nBit, rnd);
-		}
-		System.out.println();
-		System.out.println(tp);
-		*/
 	}
 	
 	public static void generatePQN(int nBit) {
@@ -62,55 +57,72 @@ public class RSAGeneratorKey {
 		}
 	}
 	
+	static int[] prime= { 2, 3, 5, 7, 11, 13, 17, 19, 
+						  23, 29, 31, 37, 41, 43, 47,
+						  53, 59, 61, 67, 71, 73, 79,
+						  83, 89, 97};
 	
-	//使用Miller-Rabin进行概率素数测试
-	/*
-	public static boolean isPrimeProbable(BigInteger p) {
-		BigInteger tp;
-		int k;
-		k=0;
-		tp = p.subtract(BigInteger.ONE);
-		while (tp.mod(new BigInteger("2"))==new BigInteger("0")) {
-			tp = tp.divide(new BigInteger("2"));
-			k++;
-		}
-		BigInteger q;
-		q = tp;
+	public static void generatePQN2(int nBit) {
 		Random rnd =new Random();
-		int t = 20;//进行素数测试的次数
-		while(t>0) {
-			BigInteger a;
-			do {
-				a =  new BigInteger(nBit-1, rnd);
+		while(true) {
+			while(true) {
+				p = new BigInteger(nBit/2,0,rnd);
+				System.out.print("p=");
+				System.out.println(p);
+				if(isPrimeProbable(p,20)) break;
 			}
-			while(a.compareTo(p)!=-1);
-			if(!isPrimeTest(p,a,q,k)) {
+			
+			while(true) {
+				q = new BigInteger(nBit/2,0,rnd);
+				System.out.print("q=");
+				System.out.println(q);
+				if(isPrimeProbable(q,20)) break;
+			}
+			
+			n = p.multiply(q);
+			if(n.bitLength() != nBit) continue;
+			//if( p.subtract(q).abs().bitCount() <= Math.max(nBit/2-100 ,nBit/3) ) continue;
+			break;
+		}
+	}
+	//使用Miller-Rabin进行概率素数测试
+	
+	public static boolean isPrimeProbable(BigInteger p,int Times) {
+		
+		for(int i=0;i<prime.length;i++)
+		{
+			String primeStr=String.valueOf(prime[i]);
+			if(p.mod(new BigInteger(primeStr)).equals(BigInteger.ZERO))
 				return false;
-			}
 		}
 		
-		return true;
-		
+		BigInteger m = p.subtract(BigInteger.ONE);  
+        BigInteger y = BigInteger.ZERO;  
+        int k = 0;  //指数
+        while((m.mod(BigInteger.valueOf(2))).equals(BigInteger.ZERO)){  
+        	k++;  
+            m = m.divide(BigInteger.valueOf(2));  
+        }  
+        
+        Random d = new Random();  
+        for(int i = 0 ; i < Times ; i++){  
+        	int t = 0;  
+            if(p.compareTo(BigInteger.valueOf(10000)) == 1){  
+            	t = 10000;  
+            }
+            else{  
+            	t = n.intValue() - 1;  
+            }  
+            int a = d.nextInt(t) + 1;//生成1~t的随机数  
+            BigInteger x = (BigInteger.valueOf(a)).modPow(m, p);  
+            for(int j=0;j<k;j++){  
+            	y = (x.multiply(x)).mod(p);  
+            	if(y.equals(BigInteger.ONE) && !(x.equals(BigInteger.ONE)) && !(x.equals(p.subtract(BigInteger.ONE)))) return false;  
+            	x = y;
+            }  
+            if(!(y.equals(BigInteger.ONE))) return false;  
+        }  
+        return true;
 	}
-	
-	//Miller-Rabin 测试；	
-	public static boolean isPrimeTest(BigInteger n, BigInteger a,BigInteger q,int k) {
-		BigInteger tmp;
-		tmp = a.modPow(q,n);
-		if(tmp.compareTo(BigInteger.ONE)==0){
-			return true;
-		}
-		//BigInteger tmp = new BigInteger("1");
-		BigInteger n_1 =  n.subtract(BigInteger.ONE);
-		for(int j=0;j<k;j++) {
-			tmp = tmp.modPow(new BigInteger("2"), n);
-			if(tmp.compareTo(n_1)==0){
-				return true;
-			}
-		}
-		return false;
-	}
-	*/
-	
 
 }

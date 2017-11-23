@@ -25,7 +25,7 @@ public class RSATest {
 		encodeGroupLen = nBit/(2*8);
 		System.out.println("·Ö¿é×Ö·û´®³¤¶È:" + encodeGroupLen);
 		encodeResBase64 = RSAEncode.RSAencode(str,Key,encodeGroupLen);
-		decodeRes = RSADecode.RSAdecode(encodeResBase64,Key,encodeGroupLen);
+		decodeRes = RSADecode.RSAdecode(encodeResBase64,Key,encodeGroupLen,true);
 		
 		System.out.println("decodeRes:");System.out.println(decodeRes);
 		System.out.println("decodeRes.length:");System.out.println(decodeRes.length());

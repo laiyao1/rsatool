@@ -1,12 +1,12 @@
 package rsa;
 import javax.swing.*;
-import java.awt.*;
+//import java.awt.*;
 //import java.awt.Color;
 //import java.awt.FlowLayout;
-import java.awt.Container;
+//import java.awt.Container;
 import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
+//import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,19 +56,20 @@ public class RSAGUI {
         p1left.setLayout(new BoxLayout(p1left, BoxLayout.Y_AXIS)); 
         
         JButton bGenerateKey = new JButton("GenerateKey");
-        bGenerateKey.setPreferredSize(new Dimension(200, 30));
+        bGenerateKey.setSize(new Dimension(200, 30));
         p1left.add(bGenerateKey);
         
         
-        String[] encrptionTypes = new String[] { "RSA-128", "RSA-256","RSA-512","RSA-768","RSA-1024" };
-        JComboBox cEncrptionType = new JComboBox(encrptionTypes);
+        String[] encrptionTypes = new String[] { "RSA-128", "RSA-256","RSA-512","RSA-768","RSA-1024","RSA-2048" };
+        JComboBox<Object> cEncrptionType = new JComboBox<Object>(encrptionTypes);
+        cEncrptionType.setSize(new Dimension(350, 1000));
         p1left.add(cEncrptionType);
         
         JLabel lValueP = new JLabel("ValueP");
         p1left.add(lValueP);
         
         JTextArea tavalueP = new JTextArea();
-        tavalueP.setPreferredSize(new Dimension(350, 150));
+        tavalueP.setSize(new Dimension(350, 1000));
         tavalueP.setText("这里显示RSA密码的p\n");
         tavalueP.setLineWrap(true);
         JScrollPane svalueP = new JScrollPane(tavalueP);
@@ -80,7 +81,7 @@ public class RSAGUI {
         p1left.add(lValueQ);
         
         JTextArea tavalueQ = new JTextArea();
-        tavalueQ.setPreferredSize(new Dimension(350, 150));
+        tavalueQ.setSize(new Dimension(350, 1000));
         tavalueQ.setText("这里显示RSA密码的q\n");
         tavalueQ.setLineWrap(true);
         JScrollPane svalueQ = new JScrollPane(tavalueQ);
@@ -92,7 +93,7 @@ public class RSAGUI {
         p1left.add(lValueN);
         
         JTextArea tavalueN = new JTextArea();
-        tavalueN.setPreferredSize(new Dimension(350, 150));
+        tavalueN.setSize(new Dimension(350, 1000));
         tavalueN.setText("这里显示RSA密码的n\n");
         tavalueN.setLineWrap(true);
         JScrollPane svalueN = new JScrollPane(tavalueN);
@@ -104,7 +105,7 @@ public class RSAGUI {
         p1left.add(lValueE);
         
         JTextArea tavalueE = new JTextArea();
-        tavalueE.setPreferredSize(new Dimension(350, 150));
+        tavalueE.setSize(new Dimension(350, 1000));
         tavalueE.setText("这里显示RSA密码的e\n");
         tavalueE.setLineWrap(true);
         JScrollPane svalueE = new JScrollPane(tavalueE);
@@ -116,7 +117,7 @@ public class RSAGUI {
         p1left.add(lValueD);
         
         JTextArea tavalueD = new JTextArea();
-        tavalueD.setPreferredSize(new Dimension(350, 150));
+        tavalueD.setSize(new Dimension(350, 1000));
         tavalueD.setText("这里显示RSA密码的d\n");
         tavalueD.setLineWrap(true);
         JScrollPane svalueD = new JScrollPane(tavalueD);
@@ -124,7 +125,8 @@ public class RSAGUI {
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
         p1left.add(svalueD);
         
-        
+        JLabel lGenerateKeyTime = new JLabel("生成密钥计时");
+        p1left.add(lGenerateKeyTime);
         
         p1.add(p1left, BorderLayout.WEST);
         
@@ -135,37 +137,37 @@ public class RSAGUI {
         p1right.add(lEncryptionKeyE);
         
         JTextArea tagetE = new JTextArea();
-        tagetE.setPreferredSize(new Dimension(200, 150));
+        tagetE.setSize(new Dimension(350, 1000));
         tagetE.setText("这里输入RSA公钥的e\n");
         tagetE.setLineWrap(true);
         JScrollPane sgetE = new JScrollPane(tagetE);
         sgetE.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p1right.add(tagetE);
+        p1right.add(sgetE);
         
         JLabel lEncryptionKeyN = new JLabel("EncryptionKeyN");
         p1right.add(lEncryptionKeyN);
         
         JTextArea tagetN = new JTextArea();
-        tagetN.setPreferredSize(new Dimension(200, 150));
+        tagetN.setSize(new Dimension(200, 150));
         tagetN.setText("这里输入RSA公钥的n\n");
         tagetN.setLineWrap(true);
         JScrollPane sgetN = new JScrollPane(tagetN);
         sgetN.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p1right.add(tagetN);
+        p1right.add(sgetN);
         
         JLabel lEncryptionText = new JLabel("EncryptionText");
         p1right.add(lEncryptionText);
         
         JTextArea tagetStr = new JTextArea();
-        tagetStr.setPreferredSize(new Dimension(200, 150));
+        tagetStr.setSize(new Dimension(200, 150));
         tagetStr.setText("这里输入需要加密的文本\n");
         tagetStr.setLineWrap(true);
         JScrollPane sgetStr = new JScrollPane(tagetStr);
         sgetStr.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p1right.add(tagetStr);
+        p1right.add(sgetStr);
         
         JButton bEncryption = new JButton("Encryption");
         bEncryption.setPreferredSize(new Dimension(200, 30));
@@ -175,13 +177,16 @@ public class RSAGUI {
         p1right.add(lEncryptionRes);
         
         JTextArea taEncode = new JTextArea();
-        taEncode.setPreferredSize(new Dimension(200, 150));
+        taEncode.setSize(new Dimension(200, 150));
         taEncode.setText("这里显示加密结果(base64)\n");
         taEncode.setLineWrap(true);
         JScrollPane sEncode = new JScrollPane(taEncode);
         sEncode.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p1right.add(taEncode);
+        p1right.add(sEncode);
+        
+        JLabel lEncodeTime = new JLabel("加密计时");
+        p1right.add(lEncodeTime);
         
         p1.add(p1right, BorderLayout.CENTER);
         
@@ -200,37 +205,37 @@ public class RSAGUI {
         p2left.add(lDecryptionKeyD);
         
         JTextArea tagetPriD = new JTextArea();
-        tagetPriD.setPreferredSize(DeTextArea);
+        tagetPriD.setSize(DeTextArea);
         tagetPriD.setText("这里输入RSA私钥的d\n");
         tagetPriD.setLineWrap(true);
         JScrollPane sgetPriD = new JScrollPane(tagetPriD);
         sgetPriD.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p2left.add(tagetPriD);
+        p2left.add(sgetPriD);
         
         JLabel lDecryptionKeyN = new JLabel("DecryptionKeyN");
         p2left.add(lDecryptionKeyN);
         
         JTextArea tagetPriN = new JTextArea();
-        tagetPriN.setPreferredSize(DeTextArea);
+        tagetPriN.setSize(DeTextArea);
         tagetPriN.setText("这里输入RSA私钥的n\n");
         tagetPriN.setLineWrap(true);
         JScrollPane sgetPriN = new JScrollPane(tagetPriN);
         sgetPriN.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p2left.add(tagetPriN);
+        p2left.add(sgetPriN);
         
         JLabel lDecryptionKeyP = new JLabel("DecryptionKeyP");
         p2left.add(lDecryptionKeyP);
         
         JTextArea tagetPriP = new JTextArea();
-        tagetPriP.setPreferredSize(DeTextArea);
+        tagetPriP.setSize(DeTextArea);
         tagetPriP.setText("这里输入用于RSA解密加速的n的因子p(或q)\n");
         tagetPriP.setLineWrap(true);
         JScrollPane sgetPriP = new JScrollPane(tagetPriP);
         sgetPriP.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p2left.add(tagetPriP);
+        p2left.add(sgetPriP);
         
         p2.add(p2left, BorderLayout.WEST);
         
@@ -241,29 +246,50 @@ public class RSAGUI {
         p2right.add(lDecryptionText);
         
         JTextArea tagetDeStr = new JTextArea();
-        tagetDeStr.setPreferredSize(new Dimension(200, 150));
+        tagetDeStr.setSize(new Dimension(200, 150));
         tagetDeStr.setText("这里输入需要解密的内容(base64)\n");
         tagetDeStr.setLineWrap(true);
         JScrollPane sgetDeStr = new JScrollPane(tagetDeStr);
         sgetDeStr.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p2right.add(tagetDeStr);
+        p2right.add(sgetDeStr);
+        
+        JRadioButton b0 = new JRadioButton("常规");
+        b0.setSelected(true);
+        b0.setBounds(50, 50, 130, 30);
+        p2right.add(b0);
+        
+        JRadioButton b1 = new JRadioButton("中国剩余定理(CRT)加速");
+        b1.setBounds(50, 50, 130, 30);
+        p2right.add(b1);
+        
+        JRadioButton b2 = new JRadioButton("中国剩余定理(CRT)&费马定理(Fermat Theory)加速");
+        b2.setBounds(50, 100, 130, 30);
+        p2right.add(b2);
+        
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(b0);
+        bg.add(b1);
+        bg.add(b2);
         
         JButton bDecryption = new JButton("Decryption");
-        bDecryption.setPreferredSize(new Dimension(200, 30));
+        bDecryption.setSize(new Dimension(200, 30));
         p2right.add(bDecryption);
         
         JLabel lDecryptionRes = new JLabel("DecryptionRes");
         p2right.add(lDecryptionRes);
         
         JTextArea taDecode = new JTextArea();
-        taDecode.setPreferredSize(new Dimension(200, 150));
+        taDecode.setSize(new Dimension(200, 150));
         taDecode.setText("这里显示解密结果\n");
         taDecode.setLineWrap(true);
         JScrollPane sDecode = new JScrollPane(taDecode);
         sDecode.setVerticalScrollBarPolicy( 
         		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
-        p2right.add(taDecode);
+        p2right.add(sDecode);
+        
+        JLabel lDecryptionTime = new JLabel("解密计时");
+        p2right.add(lDecryptionTime);
         
         p2.add(p2right, BorderLayout.CENTER);
         
@@ -277,8 +303,12 @@ public class RSAGUI {
 				else if (selectedEncrptionIndex == 1) nBit=256;
 				else if (selectedEncrptionIndex == 2) nBit=512;
 				else if (selectedEncrptionIndex == 3) nBit=768;
-				else nBit = 1024;
+				else if (selectedEncrptionIndex == 3)nBit = 1024;
+				else nBit = 2048;
+				long sysDate = System.currentTimeMillis();
 				Key = RSAGeneratorKey.generateKey(nBit);
+				sysDate = System.currentTimeMillis() - sysDate;
+				lGenerateKeyTime.setText("生成密钥时间:" + sysDate + "ms");
 				BigInteger resP = Key.p, resQ = Key.q, resN = Key.n, resE = Key.e, resD = Key.d ;
 				String resPStr = resP.toString(), resQStr = resQ.toString(), resNStr = resN.toString();
 				String resEStr = resE.toString(), resDStr = resD.toString();
@@ -293,6 +323,7 @@ public class RSAGUI {
 				tagetPriN.setText("");tagetPriN.append(resNStr);
 				tagetPriP.setText("");tagetPriP.append(resPStr);
 				
+				
 			}
         });
         
@@ -306,7 +337,10 @@ public class RSAGUI {
 				BigInteger inputN = new BigInteger(tagetN.getText().trim());
 				RSAKey inputKey = new RSAKey(BigInteger.ZERO,BigInteger.ZERO,inputN,inputE,BigInteger.ZERO);
 				String inputStr = tagetStr.getText();
+				long sysDate = System.currentTimeMillis();
 				String encodeStr = RSAEncode.RSAencode(inputStr, inputKey, inputN.bitLength()/8-1);
+				sysDate = System.currentTimeMillis() - sysDate;
+				lEncodeTime.setText("加密时间:" + sysDate + "ms");
 				
 				taEncode.setText("");taEncode.append(encodeStr);
 			}
@@ -322,7 +356,7 @@ public class RSAGUI {
 				BigInteger inputN = new BigInteger(tagetPriN.getText().trim());
 				String tmpP = tagetPriP.getText().trim();
 				BigInteger inputP;
-				if (tmpP.length()==0) {
+				if (tmpP.length()==0 || b0.isSelected()) {
 					inputP = BigInteger.ZERO;
 				}
 				else {
@@ -333,17 +367,23 @@ public class RSAGUI {
 				String inputStr = tagetDeStr.getText().trim();
 				String decodeStr;
 				try {
-					decodeStr = RSADecode.RSAdecode(inputStr, inputKey, inputN.bitLength()/8-1);
+					long sysDate = System.currentTimeMillis();
+					decodeStr = RSADecode.RSAdecode(inputStr, inputKey, inputN.bitLength()/8-1,b2.isSelected());
+					sysDate = System.currentTimeMillis() - sysDate;
 					taDecode.setText("");taDecode.append(decodeStr);
+					lDecryptionTime.setText("解密时间:"+sysDate+"ms");
+					
 				} catch (UnsupportedEncodingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					taDecode.setText("");taDecode.append("Error:解密异常");
+					
 				}
-				
 				
 			}
         });
+        
+        
         
         JTabbedPane tp = new JTabbedPane();
         tp.add(p1);
@@ -353,9 +393,9 @@ public class RSAGUI {
         tp.setTitleAt(0, "encryption");
         tp.setTitleAt(1, "decryption");
          
-        ImageIcon i = new ImageIcon("e:/project/j2se/j.png");
-        tp.setIconAt(0,i );
-        tp.setIconAt(1,i );
+        //ImageIcon i = new ImageIcon("e:/project/j2se/j.png");
+        //tp.setIconAt(0,i );
+        //tp.setIconAt(1,i );
   
         f.setContentPane(tp);
  

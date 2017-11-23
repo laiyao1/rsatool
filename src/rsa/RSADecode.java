@@ -5,7 +5,7 @@ import java.util.Base64;
 
 public class RSADecode {
 
-	public static String RSAdecode(String encodeResBase64,RSAKey Key,int encodeGroupLen) throws UnsupportedEncodingException {
+	public static String RSAdecode(String encodeResBase64,RSAKey Key,int encodeGroupLen,boolean fermatAccelerate) throws UnsupportedEncodingException {
 		
 		byte[] encodeRes = Base64.getDecoder().decode(encodeResBase64);  
 		int nBit = Key.n.bitLength();
@@ -18,7 +18,29 @@ public class RSADecode {
 			System.arraycopy(encodeRes,i,partByte,0,nByte);
 			BigInteger nmodRes = new BigInteger(1,partByte);
 			System.out.print("nmodRes:");System.out.println(nmodRes);
-			BigInteger cuttedNumber = nmodRes.modPow(Key.d, Key.n);
+			
+			BigInteger cuttedNumber;
+			if (Key.p == BigInteger.ZERO) {
+				cuttedNumber = nmodRes.modPow(Key.d, Key.n);
+			}
+			else {
+				Key.q = Key.n.divide(Key.p);
+				BigInteger cuttedNumbermodP;
+				BigInteger cuttedNumbermodQ;
+				if(fermatAccelerate) {
+					cuttedNumbermodP = nmodRes.modPow(Key.d.mod(Key.p.subtract(BigInteger.ONE)) , Key.p);
+					cuttedNumbermodQ = nmodRes.modPow(Key.d.mod(Key.q.subtract(BigInteger.ONE)) , Key.q);
+				}
+				else {
+					cuttedNumbermodP = nmodRes.modPow(Key.d , Key.p);
+					cuttedNumbermodQ = nmodRes.modPow(Key.d , Key.q);
+				}
+				
+				BigInteger pInversemodq = Key.p.modInverse(Key.q);
+				BigInteger qInversemodp = Key.q.modInverse(Key.p);
+				cuttedNumber = cuttedNumbermodP.multiply(qInversemodp).multiply(Key.q).add(cuttedNumbermodQ.multiply(pInversemodq).multiply(Key.p)).mod(Key.n);
+			}
+			
 			System.out.print("cuttedNumber:");System.out.println(cuttedNumber);
 			byte cuttedstrByte[] = cuttedNumber.toByteArray();
 			System.out.print("cuttedstrByteLen:");System.out.println(cuttedstrByte.length);
