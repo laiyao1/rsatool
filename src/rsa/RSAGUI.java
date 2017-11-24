@@ -14,23 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
 public class RSAGUI {
-	/*
-	private static void createAndShowGUI() {
-        // 确保一个漂亮的外观风格
-        JFrame.setDefaultLookAndFeelDecorated(true);
 
-        // 创建及设置窗口
-        JFrame frame = new JFrame("HelloWorldSwing");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // 添加 "Hello World" 标签
-        JLabel label = new JLabel("Hello World");
-        frame.getContentPane().add(label);
-
-        // 显示窗口
-        frame.pack();
-        frame.setVisible(true);
-    }*/
 	static RSAKey Key;
 	static int nBit = 128;
 	public static void main(String[] args) {
@@ -393,9 +377,6 @@ public class RSAGUI {
         tp.setTitleAt(0, "encryption");
         tp.setTitleAt(1, "decryption");
          
-        //ImageIcon i = new ImageIcon("e:/project/j2se/j.png");
-        //tp.setIconAt(0,i );
-        //tp.setIconAt(1,i );
   
         f.setContentPane(tp);
  
